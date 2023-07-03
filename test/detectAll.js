@@ -4,8 +4,14 @@ var drugs = ["cocaine","mdma"];
 
 var paragraphs;
 
+//probably not a good idea to do it this way but it's past midnight and I'm tired
+var currentCategory = "violence";
+
 document.addEventListener('DOMContentLoaded', function() {
-    paragraphs = document.getElementsByTagName("p");
+    //paragraphs = document.getElementsByTagName("p");
+
+    paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th");
+
     for(let i = 0; i < paragraphs.length; i++) {
         let p = paragraphs[i];
         p.style.blocked = "yes";
@@ -25,7 +31,7 @@ function censorPage(){
     for(let i = 0; i < paragraphs.length; i++) {
         let p = paragraphs[i];
         let text = p.innerText;
-        if(text.includes("shooting") && p.style.blocked == "yes") {
+        if(includesWord(text) && p.style.blocked == "yes") {
             let position = p.getBoundingClientRect();
             let blocker = document.createElement("div");
             blocker.style.position = "absolute";
@@ -42,7 +48,30 @@ function censorPage(){
             };
             blocker.className = "blocker";
             document.body.appendChild(blocker);
-            blocker.appendChild(document.createTextNode("This section contains violent content. Click to continue."));
+            blocker.appendChild(document.createTextNode("This section contains words on your list '" + currentCategory + "'. Click to show."));
         }
     }
+}
+
+function includesWord(text) {
+    text = text.toLowerCase();
+    for(let i = 0; i < violence.length; i++) {
+        if(text.includes(violence[i])) {
+            currentCategory = "violence";
+            return true;
+        }
+    }
+    for(let i = 0; i < phobias.length; i++) {
+        if(text.includes(phobias[i])) {
+            currentCategory = "phobias";
+            return true;
+        }
+    }
+    for(let i = 0; i < drugs.length; i++) {
+        if(text.includes(drugs[i])) {
+            currentCategory = "drugs";
+            return true;
+        }
+    }
+    return false;
 }
