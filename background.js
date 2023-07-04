@@ -1,5 +1,3 @@
-// background.js
-
 // Liste von verbotenen Begriffen
 var blockedTerms = ["sexuell", "gewalttätig"];
 

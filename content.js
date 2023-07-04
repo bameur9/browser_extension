@@ -1,7 +1,5 @@
-// content.js
-
 // Liste von verbotenen Begriffen
-// var blockedTerms = ["sexuell", "gewalttätig", "Selbstmord"];
+var blockedTerms = ["sexuell", "gewalttätig", "Selbstmord"];
 
 // Funktion zum Ersetzen der blockierten Begriffe
 function replaceBlockedTerms(node) {
