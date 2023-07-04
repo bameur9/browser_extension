@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Content Block Options</title>
+</head>
+
+<body>
+    <div class="keywords-holder">
+        <div class="keyword-row">
+            <div class="input-item">
+                <label>
+                    Keyword
+                </label>
+                <input type="text" value="" placeholder="Keyword...">
+            </div>
+            <div class="input-item">
+                <label>
+                    Select Type
+                </label>
+                <select>
+                    <option value="0">
+                        Block completely
+                    </option>
+                    <option value="1">
+                        Show detected keywords
+                    </option>
+                    <option value="2">
+                        Show detected category
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button class="add-keyword">
+            Add another keyword
+        </button>
+    </div>
+
+    <div id="status"></div>
+    <button id="save">Save</button>
+
+    <script src="opt.js"></script>
+</body>
+
+</html>
