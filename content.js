@@ -1,8 +1,54 @@
-/**
- * TODO:
- *  - more extensive lists
- *  - load lists from file
- *  - add options page to select lists to use and add/remove own keywords
- *  - scan web page for keywords
- *  - generate element to block sections with keywords (w/ keyword/category display and option to unblock)
- */
+chrome.storage.sync.get(
+    {
+        keywordsArray: []
+    },
+    (items) => {
+        blockPageContent(items.keywordsArray);
+    }
+);
+
+const blockPageContent = (keywordsArray) => {
+    //...
+    for (var i = 0; i < keywordsArray.length; i++) {
+        blockContent(keywordsArray[i]);
+    }
+}
+
+const blockCompletely = (position) => {
+    var blocker = document.createElement("div");
+    blocker.style.position = 'absolute'
+    blocker.style.top = position.top;
+    blocker.style.left = position.left;
+    blocker.style.width = position.width;
+    blocker.style.height = position.height;
+    blocker.style.backgroundColor = "black";
+    blocker.style.color = "white";
+    blocker.style.zIndex = "100";
+    blocker.onclick = function () {
+        document.body.removeChild(blocker);
+    };
+    blocker.className = "blocker";
+    blocker.innerHTML = 'blocked, click to unblock'
+    document.body.appendChild(blocker);
+}
+
+const blockContent = (obj) => {
+    var allElements = document.querySelectorAll('h1, h2, h3, h4, h5, p, a, caption, div, section, article, span, td, li, ul');
+    for (var i = 0; i < allElements.length; i++) {
+        if (allElements[i].textContent.toLowerCase().includes(obj.keyword.toLowerCase())) {
+            if (obj.type == '0') {
+                //block completely
+                //!!green text for now!!
+                allElements[i].style.color = 'green';
+
+                var position = allElements[i].getBoundingClientRect();
+                console.log(position.height);
+                blockCompletely(position);
+            } else if (obj.type == '1') {
+                //show detected keywords
+            } else if (obj.type == '2') {
+                //show detected category
+            }
+        }
+    }
+}
