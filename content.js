@@ -1,30 +1,34 @@
-// Liste von verbotenen Begriffen
-var blockedTerms = ["sexuell", "gewalttätig", "Selbstmord"];
+// Liste des mots indésirables
+const motsIndesirables = ["sexuell", "gewalttätig"];
 
-// Funktion zum Ersetzen der blockierten Begriffe
-function replaceBlockedTerms(node) {
-    var childNodes = node.childNodes;
-    for (var i = 0; i < childNodes.length; i++) {
-        var childNode = childNodes[i];
-        if (childNode.nodeType === Node.TEXT_NODE) {
-            var content = childNode.textContent;
-            console.log()
-            for (var j = 0; j < blockedTerms.length; j++) {
-                var term = blockedTerms[j];
-                var regex = new RegExp("\\b" + term + "\\b", "gi");
-                content = content.replace(regex, "****"); // Ersetze durch den Block
+// Fonction pour masquer le contenu
+function masquerContenu() {
+    const paragraphes = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th");
+
+    for (let i = 0; i < paragraphes.length; i++) {
+        const paragraphe = paragraphes[i];
+        const texte = paragraphe.innerText.toLowerCase();
+
+        for (let j = 0; j < motsIndesirables.length; j++) {
+            const motIndesirable = motsIndesirables[j];
+
+            if (texte.includes(motIndesirable)) {
+                const bloc = document.createElement("div");
+                bloc.classList.add("texte-bloc");
+                bloc.innerText = "Cliquez pour afficher le contenu";
+
+                bloc.addEventListener("click", function() {
+                    paragraphe.style.display = "block";
+                    bloc.style.display = "none";
+                });
+
+                paragraphe.style.display = "none";
+                paragraphe.parentNode.insertBefore(bloc, paragraphe);
+                break;
             }
-            childNode.textContent = content;
-        } else {
-            replaceBlockedTerms(childNode); // Rekursiver Aufruf für verschachtelte Knoten
         }
     }
 }
 
-// Hauptfunktion zum Blockieren von Inhalten
-function blockContent() {
-    replaceBlockedTerms(document.body);
-}
-
-// Rufe die Hauptfunktion auf, wenn die Seite geladen wurde
-blockContent();
+// Appel de la fonction au chargement de la page
+masquerContenu();
