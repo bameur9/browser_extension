@@ -10,7 +10,7 @@ var currentCategory = "violence";
 document.addEventListener('DOMContentLoaded', function() {
     //paragraphs = document.getElementsByTagName("p");
 
-    paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th");
+    paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, ul, ol, table");
 
     for(let i = 0; i < paragraphs.length; i++) {
         let p = paragraphs[i];
