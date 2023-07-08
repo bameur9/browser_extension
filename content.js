@@ -1,46 +1,71 @@
-// Liste des mots indésirables
-const motsIndesirables = ["sexuell", "gewalttätig", "Selbstmord", "tod", "Drogen", "Krieg"];
+// Liste des mots indésirables avec leurs catégories
+const unwantedContent = {
+    "violences": ["violence", "knife", "blood", "gun", "shoot", "murder", "kill", "assassination", "kidnapping", "hijacking", "arson", "torture", "mass murder", "abuse"],
+    "sexual_content": ["sex", "penis", "vagina"],
+    "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed"]
+};
 
-// Fonction pour masquer le contenu
-function masquerContenu() {
-    const paragraphes = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th, cite, span, em");
+// Fonction pour masquer le contenu et afficher les catégories
+function hideUnwantedContent() {
+    const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th, cite, span, em, title, a");
 
-    for (let i = 0; i < paragraphes.length; i++) {
-        const paragraphe = paragraphes[i];
-        const texte = paragraphe.innerText.toLowerCase();
+    for (let i = 0; i < paragraphs.length; i++) {
+        const paragraph = paragraphs[i];
+        const text = paragraph.innerText.toLowerCase();
+        let categorysFound = [];
 
-        for (let j = 0; j < motsIndesirables.length; j++) {
-            const motIndesirable = motsIndesirables[j];
+        for (const category in unwantedContent) {
+            const words = unwantedContent[category];
 
-            if (texte.includes(motIndesirable)) {
-                const bloc = document.createElement("div");
-                bloc.classList.add("texte-bloc");
-                bloc.innerText = "Klicken Sie, um den Inhalt zu sehen";
+            let categoryFound = false;
 
-                bloc.style.padding = "10px";
-                bloc.style.margin = "30px";
-                bloc.style.width = "100%";
-                bloc.style.minHeight = "100px";
-                bloc.style.borderColor = "red";
-                bloc.style.borderWidth = "thick"
-                bloc.style.background = "#ccc";
-                bloc.style.color = "#000";
-                bloc.style.cursor = "pointer";
+            for (let j = 0; j < words.length; j++) {
+                const unwantedWord = words[j];
 
+                if (text.includes(unwantedWord)) {
+                    categoryFound = true;
+                    categorysFound.push(category);
+                    break;
+                }
+            }
 
-                bloc.addEventListener("click", function() {
-                    paragraphe.style.display = "block";
-                    bloc.style.display = "none";
-
-                });
-
-                paragraphe.style.display = "none";
-                paragraphe.parentNode.insertBefore(bloc, paragraphe);
+            if (categoryFound) {
                 break;
             }
+        }
+
+        if (categorysFound.length > 0) {
+            const bloc = document.createElement("div");
+            bloc.classList.add("text-bloc");
+            bloc.innerText = "Bloc Content";
+
+            const bloc2 = document.createElement("div");
+            bloc2.classList.add("unter-bloc");
+            bloc2.innerText = "(key: " + categorysFound.join(", ") + ")";
+            bloc2.style.padding = "10px";
+            bloc2.style.background = "red";
+            bloc2.style.width = "25%";
+            bloc2.style.color = "#fff";
+
+            bloc.addEventListener("click", function() {
+                bloc.appendChild(bloc2);
+                //paragraph.style.display = "block";
+                //bloc.style.display = "none";
+            });
+
+            bloc2.addEventListener("click", function() {
+                paragraph.style.display = "block";
+                bloc.style.display = "none";
+                bloc2.style.display = "none";
+
+            });
+
+
+            paragraph.style.display = "none";
+            paragraph.parentNode.insertBefore(bloc, paragraph);
         }
     }
 }
 
-// Appel de la fonction au chargement de la page
-masquerContenu();
+// Appel de la fonction pour masquer le contenu
+hideUnwantedContent();

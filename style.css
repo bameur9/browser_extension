@@ -1,5 +1,9 @@
 .texte-bloc {
-    background-color: #ccc;
+    margin: 30px;
+    width: 100%;
+    border-color: red;
+    border-width: thick;
+    background-color: #fef;
     color: #000;
     padding: 10px;
     cursor: pointer;
