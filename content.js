@@ -21,10 +21,10 @@ function hideUnwantedContent() {
 
             for (let j = 0; j < words.length; j++) {
                 const unwantedWord = words[j];
-
                 if (text.includes(unwantedWord)) {
                     categoryFound = true;
                     categorysFound.push(category);
+                    console.log(categorysFound)
                     break;
                 }
             }
@@ -41,11 +41,8 @@ function hideUnwantedContent() {
 
             const bloc2 = document.createElement("div");
             bloc2.classList.add("unter-bloc");
+            console.log(categorysFound);
             bloc2.innerText = "(key: " + categorysFound.join(", ") + ")";
-            bloc2.style.padding = "10px";
-            bloc2.style.background = "red";
-            bloc2.style.width = "25%";
-            bloc2.style.color = "#fff";
 
             bloc.addEventListener("click", function() {
                 bloc.appendChild(bloc2);
