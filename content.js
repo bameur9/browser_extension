@@ -1,5 +1,5 @@
 // Liste des mots indésirables
-const motsIndesirables = ["sexuell", "Selbstmord"];
+const motsIndesirables = ["sexuell", "gewalttätig", "Selbstmord", "tod", "Drogen", "Krieg"];
 
 // Fonction pour masquer le contenu
 function masquerContenu() {
