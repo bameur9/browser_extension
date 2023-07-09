@@ -42,7 +42,23 @@ const blockContent = (obj) => {
                 allElements[i].style.color = 'green';
 
                 var position = allElements[i].getBoundingClientRect();
-                console.log(position.height);
+
+                var blocker = document.createElement("div");
+                blocker.style.position = 'absolute'
+                blocker.style.top = position.top;
+                blocker.style.left = position.left;
+                blocker.style.width = position.width;
+                blocker.style.height = position.height;
+                blocker.style.backgroundColor = "black";
+                blocker.style.color = "white";
+                blocker.style.zIndex = "100";
+                blocker.onclick = function () {
+                    document.body.removeChild(blocker);
+                };
+                blocker.className = "blocker";
+                blocker.innerHTML = 'blocked, click to unblock'
+
+                //allElements[i].innerHTML = allElements[i].innerHTML.replace(allElements[i].innerHTML, blocker);
                 blockCompletely(position);
             } else if (obj.type == '1') {
                 //show detected keywords
