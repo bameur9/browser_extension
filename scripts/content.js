@@ -37,8 +37,12 @@ function censorPage(){
             blocker.style.left = position.left + "px";
             blocker.style.width = position.width + "px";
             blocker.style.height = position.height + "px";
-            blocker.style.backgroundColor = "black";
-            blocker.style.color = "white";
+            blocker.style.backgroundColor = "#424242";
+            blocker.style.color = "#bababa";
+            blocker.style.borderRadius = "5px";
+            blocker.style.border = "2px solid #bababa";
+            blocker.style.fontSize = "2vmin";
+            blocker.style.textAlign = "center";
             blocker.style.zIndex = "10000000";
             blocker.onclick = function() {
                 document.body.removeChild(blocker);
