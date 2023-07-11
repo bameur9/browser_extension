@@ -20,9 +20,9 @@ function hideUnwantedContent() {
 
             for (let j = 0; j < words.length; j++) {
                 const unwantedWord = words[j];
-                const regex = new RegExp(`\\b${unwantedWord}\\b`, "gi"); // Regex zum Auffinden von exakten Wörtern
+                // const regex = new RegExp(`\\b${unwantedWord}\\b`, "gi"); // Regex zum Auffinden von exakten Wörtern
 
-                if (regex.test(text)) {
+                if (text.includes(unwantedWord)) {
                     categoryFound = true;
                     categoriesFound.push(category);
                     break;
