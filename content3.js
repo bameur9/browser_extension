@@ -2,12 +2,12 @@
 const unwantedContent = {
     "violences": ["violence", "knife", "blood", "gun", "shoot", "murder", "kill", "assassination", "kidnapping", "hijacking", "arson", "torture", "mass murder", "abuse"],
     "sexual_content": ["sex", "penis", "vagina", "sexual"],
-    "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed"]
+    "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed", "Cocaine DrugFacts"]
 };
 
 // Funktion zum Verbergen unerwünschter Inhalte und Anzeigen der Kategorien
 function hideUnwantedContent() {
-    const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, ul, ol, table, a, title, span");
+    const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th, cite, span, em, title, a");
 
     for (let i = 0; i < paragraphs.length; i++) {
         const paragraph = paragraphs[i];
@@ -24,6 +24,7 @@ function hideUnwantedContent() {
                 const regex = new RegExp(`\\b${unerwünschtesWort}\\b`, "gi"); // Regex, um exakte Wörter zu finden
 
                 if (regex.test(text)) {
+                    console.log(unerwünschtesWort)
                     kategorieGefunden = true;
                     gefundenKategorien.push(kategorie);
                     break;
