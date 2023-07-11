@@ -1,38 +1,30 @@
-// Liste des mots indésirables avec leurs catégories
+// Liste der unerwünschten Inhalte mit ihren Kategorien
 const unwantedContent = {
     "violences": ["violence", "knife", "blood", "gun", "shoot", "murder", "kill", "assassination", "kidnapping", "hijacking", "arson", "torture", "mass murder", "abuse"],
-    "sexual_content": ["sex", "penis", "vagina"],
+    "sexual_content": ["sex", "penis", "vagina", "sexual"],
     "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed"]
 };
 
-function wordExists(text, word) {
-    const regex = new RegExp(`\\b${word}\\b`, 'i');
-    return regex.test(text);
-}
-
-// Fonction pour masquer le contenu et afficher les catégories
+// Funktion zum Ausblenden des unerwünschten Inhalts
 function hideUnwantedContent() {
-    const elements = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, ul, ol, table");
-    const bloc = document.createElement("div");
-    bloc.classList.add("text-bloc");
-    let keyFound = [];
+    const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th, cite, span, em, title, a");
 
-    for (let i = 0; i < elements.length; i++) {
-        const paragraph = elements[i];
+    for (let i = 0; i < paragraphs.length; i++) {
+        const paragraph = paragraphs[i];
         const text = paragraph.innerText.toLowerCase();
-        let categoryFound = false;
+        let categoriesFound = [];
 
         for (const category in unwantedContent) {
             const words = unwantedContent[category];
+            let categoryFound = false;
 
             for (let j = 0; j < words.length; j++) {
                 const unwantedWord = words[j];
+                const regex = new RegExp(`\\b${unwantedWord}\\b`, "gi"); // Regex zum Auffinden von exakten Wörtern
 
-                if (wordExists(text, unwantedWord)) {
+                if (regex.test(text)) {
                     categoryFound = true;
-                    if (!keyFound.includes(category)) {
-                        keyFound.push(category);
-                    }
+                    categoriesFound.push(category);
                     break;
                 }
             }
@@ -42,31 +34,39 @@ function hideUnwantedContent() {
             }
         }
 
-        if (categoryFound) {
-            paragraph.style.display = "none";
-        } else {
-            bloc.appendChild(paragraph.cloneNode(true));
+        if (categoriesFound.length > 0) {
+            const existingBlock = paragraph.parentNode.querySelector(".text-block");
+
+            if (existingBlock) {
+                existingBlock.classList.add(...categoriesFound);
+                const innerBlock = existingBlock.querySelector(".inner-block");
+                innerBlock.innerText += ", " + categoriesFound.join(", ");
+            } else {
+                const block = document.createElement("div");
+                block.classList.add("text-block");
+                block.classList.add(...categoriesFound);
+                block.innerText = "Blocked Content";
+
+                const innerBlock = document.createElement("div");
+                innerBlock.classList.add("inner-block");
+                innerBlock.innerText = "(key: " + categoriesFound.join(", ") + ")";
+
+                const button = document.createElement("button");
+                button.classList.add("button");
+                button.innerText = "View Content";
+                button.addEventListener("click", function() {
+                    const parentBlock = button.parentNode.parentNode;
+                    parentBlock.style.display = "none";
+                });
+
+                innerBlock.appendChild(button);
+                block.appendChild(innerBlock);
+
+                paragraph.parentNode.insertBefore(block, paragraph);
+            }
         }
-    }
-
-    if (keyFound.length > 0) {
-        const bloc2 = document.createElement("div");
-        bloc2.classList.add("unter-bloc");
-        bloc2.innerText = "key: " + keyFound.join(", ");
-        bloc.appendChild(bloc2);
-
-        bloc.addEventListener("click", function() {
-            bloc2.style.display = "block";
-        });
-
-        bloc2.addEventListener("click", function() {
-            bloc2.style.display = "none";
-        });
-
-        const parentElement = elements[0].parentNode;
-        parentElement.insertBefore(bloc, parentElement.firstChild);
     }
 }
 
-// Appel de la fonction pour masquer le contenu
+// Aufruf der Funktion zum Ausblenden des unerwünschten Inhalts
 hideUnwantedContent();

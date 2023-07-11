@@ -1,6 +1,5 @@
-.text-bloc {
+.text-block {
     margin: 30px;
-    width: 100%;
     border-color: red;
     border-width: thick;
     background-color: rgb(238, 238, 230);
@@ -14,10 +13,9 @@
     text-align: center;
 }
 
-.unter-bloc {
+.inner-block {
     text-align: center;
     padding: 10px;
     background-color: rgb(246, 65, 65);
-    width: 25%;
     color: #fefe;
 }
