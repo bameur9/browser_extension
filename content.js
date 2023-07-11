@@ -36,27 +36,28 @@ function hideUnwantedContent() {
 
         if (categorysFound.length > 0) {
             const bloc = document.createElement("div");
-            bloc.classList.add("text-bloc");
+            bloc.classList.add("text-block");
             bloc.innerText = "Bloc Content";
 
             const bloc2 = document.createElement("div");
-            bloc2.classList.add("unter-bloc");
+            bloc2.classList.add("inner-block");
             bloc2.innerText = "(key: " + categorysFound.join(", ") + ")";
-            bloc2.style.padding = "10px";
-            bloc2.style.background = "red";
-            bloc2.style.width = "25%";
-            bloc2.style.color = "#fff";
+
+            const bloc3 = document.createElement("button");
+            bloc3.classList.add("button");
+            bloc3.innerText = "Click to View Content";
+
+            bloc2.appendChild(bloc3);
 
             bloc.addEventListener("click", function() {
                 bloc.appendChild(bloc2);
-                //paragraph.style.display = "block";
-                //bloc.style.display = "none";
             });
 
-            bloc2.addEventListener("click", function() {
+            bloc3.addEventListener("click", function() {
                 paragraph.style.display = "block";
                 bloc.style.display = "none";
                 bloc2.style.display = "none";
+                bloc.style.display = "none";
 
             });
 
