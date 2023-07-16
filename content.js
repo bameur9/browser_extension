@@ -1,34 +1,37 @@
-// Liste des mots indésirables
-const motsIndesirables = ["sexuell", "gewalttätig"];
+// List of undesirable words
+const unwantedWords = ["violence", "suicide", "cocaine"];
 
-// Fonction pour masquer le contenu
-function masquerContenu() {
-    const paragraphes = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th");
+// Function to hide content
+function hideContent() {
+    const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th");
 
-    for (let i = 0; i < paragraphes.length; i++) {
-        const paragraphe = paragraphes[i];
-        const texte = paragraphe.innerText.toLowerCase();
+    for (let i = 0; i < paragraphs.length; i++) {
+        const paragraph = paragraphs[i];
+        const text = paragraph.innerText.toLowerCase();
 
-        for (let j = 0; j < motsIndesirables.length; j++) {
-            const motIndesirable = motsIndesirables[j];
+        for (let j = 0; j < unwantedWords.length; j++) {
+            const unwantedWord = unwantedWords[j];
 
-            if (texte.includes(motIndesirable)) {
-                const bloc = document.createElement("div");
-                bloc.classList.add("texte-bloc");
-                bloc.innerText = "Cliquez pour afficher le contenu";
+            if (text.includes(unwantedWord)) {
+                const block = document.createElement("div");
+                block.classList.add("text-block");
+                block.innerText = "Click to reveal content";
 
-                bloc.addEventListener("click", function() {
-                    paragraphe.style.display = "block";
-                    bloc.style.display = "none";
+                // Event listener to show the paragraph and hide the block when clicked
+                block.addEventListener("click", function() {
+                    paragraph.style.display = "block";
+                    block.style.display = "none";
                 });
 
-                paragraphe.style.display = "none";
-                paragraphe.parentNode.insertBefore(bloc, paragraphe);
+                paragraph.style.display = "none";
+                paragraph.parentNode.insertBefore(block, paragraph);
                 break;
             }
         }
     }
+
+
 }
 
-// Appel de la fonction au chargement de la page
-masquerContenu();
+// Call the function when the page loads
+hideContent();
