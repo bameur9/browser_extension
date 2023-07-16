@@ -1,5 +1,5 @@
 // Liste von verbotenen Begriffen
-var blockedTerms = ["sexuell", "gewalttätig"];
+var blockedTerms = ["violence", "cocaine", "selbstmord"];
 
 // Ereignishandler für Web-Anfragen
 chrome.webRequest.onBeforeRequest.addListener(

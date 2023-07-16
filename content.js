@@ -1,5 +1,9 @@
+/**
+ * The first version of my code used stars (***) to block unwanted words listed in the web page content.
+ */
+
 // Liste von verbotenen Begriffen
-var blockedTerms = ["sexuell", "gewalttätig", "Selbstmord"];
+var blockedTerms = ["violence", "cocaine", "selbstmord"];
 
 // Funktion zum Ersetzen der blockierten Begriffe
 function replaceBlockedTerms(node) {
