@@ -1,11 +1,10 @@
-// Liste des mots indésirables avec leurs catégories
 const unwantedContent = {
     "violences": ["violence", "knife", "blood", "gun", "shoot", "murder", "kill", "assassination", "kidnapping", "hijacking", "arson", "torture", "mass murder", "abuse"],
     "sexual_content": ["sex", "penis", "vagina"],
     "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed"]
 };
 
-// Fonction pour masquer le contenu et afficher les catégories
+
 function hideUnwantedContent() {
     const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th, cite, span, em, title, a");
 
@@ -68,5 +67,4 @@ function hideUnwantedContent() {
     }
 }
 
-// Appel de la fonction pour masquer le contenu
 hideUnwantedContent();
