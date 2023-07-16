@@ -1,18 +1,26 @@
-// Liste des mots indésirables avec leurs catégories
+/**
+ * This version shows one of the finished versions. Scenario description.
+1. The extension detects indented words and inserts the block.
+2. A first click on the block displays the key concerned.
+3. If the user wants to see the word, they click on view content.
+4. After clicking, all the blocks with the same category disappear at the same time.
+ */
+
+//List of unwanted words with their categories
 const unwantedContent = {
     "violences": ["violence", "knife", "blood", "gun", "shoot", "murder", "kill", "assassination", "kidnapping", "hijacking", "arson", "torture", "mass murder", "abuse"],
-    "sexual_content": ["sex", "penis", "vagina"],
-    "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed"]
+    "sexual_content": ["sex", "penis", "vagina", "sexual"],
+    "drug_reference": ["heroin", "cocaine", "weed", "marijuana", "crack", "lsd", "mdma", "acid", "meth", "speed", "Cocaine DrugFacts"]
 };
 
-// Fonction pour masquer le contenu et afficher les catégories
+// Function to hide unwanted content and display categories
 function hideUnwantedContent() {
     const paragraphs = document.querySelectorAll("p, h1, h2, h3, h4, h5, h6, li, td, th, cite, span, em, title, a");
 
     for (let i = 0; i < paragraphs.length; i++) {
         const paragraph = paragraphs[i];
         const text = paragraph.innerText.toLowerCase();
-        let categorysFound = [];
+        let foundCategories = [];
 
         for (const category in unwantedContent) {
             const words = unwantedContent[category];
@@ -21,10 +29,11 @@ function hideUnwantedContent() {
 
             for (let j = 0; j < words.length; j++) {
                 const unwantedWord = words[j];
-                if (text.includes(unwantedWord)) {
+                const regex = new RegExp(`\\b${unwantedWord}\\b`, "gi"); // Regex to find exact words
+
+                if (regex.test(text)) {
                     categoryFound = true;
-                    categorysFound.push(category);
-                    console.log(categorysFound)
+                    foundCategories.push(category);
                     break;
                 }
             }
@@ -34,35 +43,39 @@ function hideUnwantedContent() {
             }
         }
 
-        if (categorysFound.length > 0) {
-            const bloc = document.createElement("div");
-            bloc.classList.add("text-bloc");
-            bloc.innerText = "Bloc Content";
+        if (foundCategories.length > 0) {
+            const block = document.createElement("div");
+            block.classList.add("text-block");
+            block.innerText = "Content Blocked -> Click to view the Keys";
 
-            const bloc2 = document.createElement("div");
-            bloc2.classList.add("unter-bloc");
-            console.log(categorysFound);
-            bloc2.innerText = "(key: " + categorysFound.join(", ") + ")";
+            const block2 = document.createElement("div");
+            block2.classList.add("inner-block");
+            block2.innerText = "(key: " + foundCategories.join(", ") + ")";
+            console.log(foundCategories)
 
-            bloc.addEventListener("click", function() {
-                bloc.appendChild(bloc2);
-                //paragraph.style.display = "block";
-                //bloc.style.display = "none";
+            const block3 = document.createElement("button");
+            block3.classList.add("button");
+            block3.innerText = "View Content";
+            block2.appendChild(block3);
+
+            block.addEventListener("click", function() {
+                block.appendChild(block2);
             });
 
-            bloc2.addEventListener("click", function() {
-                paragraph.style.display = "block";
-                bloc.style.display = "none";
-                bloc2.style.display = "none";
-
+            block3.addEventListener("click", function() {
+                const blocksToHide = document.querySelectorAll(`.text-block.${foundCategories.join(", ")}`);
+                for (let k = 0; k < blocksToHide.length; k++) {
+                    const blockToHide = blocksToHide[k];
+                    blockToHide.style.display = "none";
+                }
             });
 
-
-            paragraph.style.display = "none";
-            paragraph.parentNode.insertBefore(bloc, paragraph);
+            paragraph.parentNode.insertBefore(block, paragraph);
+            block.classList.add(...foundCategories);
         }
     }
+
 }
 
-// Appel de la fonction pour masquer le contenu
+// Aufruf der Funktion zum Verbergen unerwünschter Inhalte
 hideUnwantedContent();
